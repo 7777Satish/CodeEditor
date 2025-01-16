@@ -1,10 +1,10 @@
-# React Code Editor
+# Code Editor (React)
 
-A customizable and extendable code editor built with React. Currently, it uses Monaco as the editor, but there are plans to replace Monaco with a custom-built editor in the future.
+A customizable and extendable code editor built with React. Currently, the editor uses Monaco as the underlying editor, but there are plans to replace Monaco with a custom-built editor in the future.
 
 ## Features
 
-- Syntax highlighting for various programming languages (via Monaco).
+- Syntax highlighting for various programming languages (powered by Monaco).
 - Auto-complete functionality.
 - Customizable themes and fonts.
 - Code linting and error highlighting (to be enhanced in future updates).
@@ -22,13 +22,13 @@ Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/your-project-name.git
+    git clone https://github.com/7777Satish/CodeEditor.git
     ```
 
 2. Navigate to the project folder:
 
     ```bash
-    cd your-project-name
+    cd CodeEditor
     ```
 
 3. Install dependencies:

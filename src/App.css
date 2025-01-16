@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --EditorBackgroundColor: #1e1e1e;
+    --EditorForegroundColor: #d4d4d4;
+    --ActivityBarBackground: #1e1e1e;
+    --EditorOutlineColor: rgba(156, 156, 156, 0.2);
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: 33px 1fr;
+    background: var(--ActivityBarBackground);
+    color: var(--EditorForegroundColor);
+}
+
+
+/* ============ Top Menu Bar Start ============ */
+
+.main .top {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    background: var(--ActivityBarBackground);
+    color: var(--EditorForegroundColor);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    border-bottom: 1px solid var(--EditorOutlineColor);
+}
+
+.main .top .logo {
+    height: 100%;
+    color: #007ACC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0 0 12px;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.main .top .logo svg {
+    transform: translateY(2px);
+}
+
+.main .top ul {
+    display: flex;
+    list-style: none;
+    font-size: 100%;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.main .top ul li {
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============ Top Menu Bar End ============ */
+
+
+/* ========== Middle Section Start ========== */
+
+.main>.middle {
+    width: 100vw;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+}
+
+
+/* ========== Left Side Menu Start ========== */
+
+.main>.middle .left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--ActivityBarBackground);
+    color: var(--EditorForegroundColor);
+    border-top: 1px solid var(--EditorOutlineColor);
+    border-right: 1px solid var(--EditorOutlineColor);
+}
+
+.main>.middle .left .leftTop {
+    margin-top: 10px;
+}
+
+.main>.middle .left .leftBottom {
+    margin-bottom: 10px;
+}
+
+.main>.middle .left ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main>.middle .left ul li {
+    width: 100%;
+    height: 100%;
+    font-size: x-large;
+    color: gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+
+.main>.middle .left ul li:hover {
+    color: var(--EditorForegroundColor);
+}
+
+.main>.middle .left ul .active {
+    color: var(--EditorForegroundColor);
+}
+
+/* ========== Left Side Menu Start ========== */
+.main>.middle>.right {
+    width: 100%;
+    height: 100%;
+    border-left: 1px solid var(--EditorOutlineColor);
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.main>.middle>.right .navigation {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--EditorOutlineColor);
+}
+
+.main>.middle>.right .navigation .files,
+.features {
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
+
+.main>.middle>.right .navigation .features {
+    margin-right: 20px;
+}
+
+.main>.middle>.right .navigation .features button {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 4px;
+    color: var(--EditorForegroundColor);
+}
+
+.main > .middle > .right .bottom{
+    width: 100%;
+    height: 100%;
+}

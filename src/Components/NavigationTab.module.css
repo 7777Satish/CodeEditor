@@ -1,0 +1,54 @@
+.main{
+    padding: 4px 12px;
+    border-right: 1px solid var(--EditorOutlineColor);
+    font-size: small;
+    font-family: 'Poppins', serif;
+    /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+    color: rgb(155, 155, 155);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.main:hover{
+    background: #111;
+}
+
+.active{
+    color: white;
+    background: #111;
+}
+
+.active:hover{
+    background: transparent !important;
+}
+
+.main .icon{
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main .icon span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main button{
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    height: inherit;
+    padding: inherit 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

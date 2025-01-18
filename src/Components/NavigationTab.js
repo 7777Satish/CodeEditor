@@ -19,10 +19,10 @@ function NavigationTab({ filetype, name, opened }) {
     return (
         <div className={`${styles.main}${opened ? ` ${styles.active}` : ""}`}>
             <span className={styles.icon}>
-                {fileIcons[filetype]}
+                {fileIcons[filetype] || 'T'}
             </span>
             <span>{name}</span>
-            {opened && <button><VscClose /></button>}
+            <button className={opened ? `${styles.btnActive}` : ""}><VscClose /></button>
         </div>
     );
 }

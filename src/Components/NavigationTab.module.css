@@ -3,8 +3,7 @@
     border-right: 1px solid var(--EditorOutlineColor);
     font-size: small;
     font-family: 'Poppins', serif;
-    /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
-    color: rgb(155, 155, 155);
+    color: #9b9b9b;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -16,12 +15,8 @@
 }
 
 .active{
-    color: white;
-    background: #111;
-}
-
-.active:hover{
-    background: transparent !important;
+    color: white !important;
+    background: #111 !important;
 }
 
 .main .icon{
@@ -43,12 +38,21 @@
 
 .main button{
     background: transparent;
+    color: transparent;
     border: none;
     outline: none;
-    color: inherit;
     height: inherit;
     padding: inherit 3px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.main:hover button{
+    color: #7b7b7b;
+}
+
+.main .btnActive{
+    color: inherit !important;
 }

@@ -1,0 +1,24 @@
+/* =========== Nav Start =========== */
+
+.nav{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.nav h4{
+    font-size: x-small;
+    color: #ddd;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* =========== Nav End =========== */
+
+.bottom{
+    width: 100%;
+    height: 100%;
+    
+}

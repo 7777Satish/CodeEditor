@@ -1,12 +1,12 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
-
 :root {
     --EditorBackgroundColor: #1e1e1e;
     --EditorForegroundColor: #d4d4d4;
-    --ActivityBarBackground: #1e1e1e;
+    --ActivityBarBackground: #171717;
     --EditorOutlineColor: rgba(156, 156, 156, 0.2);
 }
 
@@ -15,9 +15,10 @@
     height: 100vh;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 33px 1fr;
+    grid-template-rows: 33px 1fr 25px;
     background: var(--ActivityBarBackground);
     color: var(--EditorForegroundColor);
+    user-select: none;
 }
 
 
@@ -81,7 +82,16 @@
 
 /* ========== Left Side Menu Start ========== */
 
-.main>.middle .left {
+.main>.middle .left{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.main>.middle .left nav {
     width: 100%;
     height: 100%;
     display: flex;
@@ -95,21 +105,21 @@
     border-right: 1px solid var(--EditorOutlineColor);
 }
 
-.main>.middle .left .leftTop {
+.main>.middle .left nav .leftTop {
     margin-top: 10px;
 }
 
-.main>.middle .left .leftBottom {
+.main>.middle .left nav .leftBottom {
     margin-bottom: 10px;
 }
 
-.main>.middle .left ul {
+.main>.middle .left nav ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.main>.middle .left ul li {
+.main>.middle .left nav ul li {
     width: 100%;
     height: 100%;
     font-size: x-large;
@@ -121,16 +131,17 @@
     cursor: pointer;
 }
 
-
-.main>.middle .left ul li:hover {
+.main>.middle .left nav ul li:hover {
     color: var(--EditorForegroundColor);
 }
 
-.main>.middle .left ul .active {
+.main>.middle .left nav ul .active {
     color: var(--EditorForegroundColor);
 }
 
-/* ========== Left Side Menu Start ========== */
+/* ========== Left Side Menu End ========== */
+
+
 .main>.middle>.right {
     width: 100%;
     height: 100%;
@@ -140,8 +151,10 @@
 }
 
 .main>.middle>.right .navigation {
+    position: relative;
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 100px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--EditorOutlineColor);
@@ -158,8 +171,41 @@
     flex-shrink: 0;
 }
 
+.main>.middle>.right .navigation .files {
+    /* width: calc(100vw - 200px); */
+    overflow-x: auto;
+}
+
+.main>.middle>.right .navigation .files:hover {
+    overflow-x: auto;
+}
+
+.main>.middle>.right .navigation .files::-webkit-scrollbar {
+    height: 2px;
+}
+
+.main>.middle>.right .navigation .files::-webkit-scrollbar-thumb {
+    height: 2px;
+    /* animation: scrollBarAnimation 0.5s linear; */
+    /* background: rgba(156, 156, 156, 0.6); */
+    background: linear-gradient(to right, rgba(238, 130, 238, 0.5), rgba(255, 255, 0, 0.5));
+    /* background-size: 200% 0;
+    background-position: 100% 0; */
+    transition: 0.3s;
+}
+
+@keyframes scrollBarAnimation {
+    from {
+        background: transparent;
+    }
+
+    to {
+        background: rgba(156, 156, 156, 0.6);
+    }
+}
+
 .main>.middle>.right .navigation .features {
-    margin-right: 20px;
+    width: 100px;
 }
 
 .main>.middle>.right .navigation .features button {
@@ -170,7 +216,38 @@
     color: var(--EditorForegroundColor);
 }
 
-.main > .middle > .right .bottom{
+.main>.middle>.right .bottom {
     width: 100%;
     height: 100%;
+}
+
+
+/* ============ Bottom Bar Start ============ */
+.main > .bottom{
+    width: 100%;
+    height: 100%;
+    background: #222;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: small;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main > .bottom .left, .right{
+    display: flex;
+}
+
+.main > .bottom .left .remote{
+    background: #007ACC;
+    color: #eee;
+    font-size: medium;
+    height: inherit;
+}
+
+.main > .bottom span{
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,10 +1,12 @@
 import './App.css';
 import { IoIosMore } from 'react-icons/io';
-import { useState } from 'react';
-import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscSettingsGear, VscVscode, VscSplitVertical, VscRemote, VscError, VscWarning, VscBell } from "react-icons/vsc";
+import React, { createContext, useState } from 'react';
+import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscSettingsGear, VscSplitVertical, VscRemote, VscError, VscWarning, VscBell } from "react-icons/vsc";
 import MonacoEditor from './Components/MonacoEditor';
 import NavigationTab from './Components/NavigationTab';
 import LeftMenu from './Components/LeftMenu';
+
+export const FileManagerContext = createContext();
 
 function App() {
   const [leftmenu, setLeftmenu] = useState({
@@ -13,7 +15,7 @@ function App() {
     width: 300
   });
 
-  const [openedTabs, setOpenedtabs] = useState([]);
+  const [openedTabs, setOpenedTabs] = useState([]);
 
   const [file, setFile] = useState({
     name: 'untitled.txt',
@@ -23,7 +25,7 @@ function App() {
 
   const handleNav = (e) => {
     const tabId = e.currentTarget.getAttribute('data-tab_id');
-    if(tabId == leftmenu.currentTab){
+    if(tabId === leftmenu.currentTab){
       setLeftmenu({ ...leftmenu, opened: !leftmenu.opened });     
       return;
     }
@@ -54,19 +56,19 @@ function App() {
       <div className='middle' style={leftmenu.opened ? { gridTemplateColumns: `${leftmenu.width}px 1fr` } : {}}>
         <div className='left'>
           <nav>
-            <ul className='leftTop'>
-              <li data-tab_id={0} className={leftmenu.currentTab === '0' ? 'active' : ""} onClick={handleNav}><VscFiles /></li>
-              <li data-tab_id={1} className={leftmenu.currentTab === '1' ? 'active' : ""} onClick={handleNav}><VscSearch /></li>
-              <li data-tab_id={2} className={leftmenu.currentTab === '2' ? 'active' : ""} onClick={handleNav}><VscSourceControl /></li>
-              <li data-tab_id={3} className={leftmenu.currentTab === '3' ? 'active' : ""} onClick={handleNav}><VscDebugAlt /></li>
-              <li data-tab_id={4} className={leftmenu.currentTab === '4' ? 'active' : ""} onClick={handleNav}><VscExtensions /></li>
-            </ul>
+              <ul className='leftTop'>
+                <li data-tab_id={0} className={leftmenu.currentTab === '0' ? 'active' : ""} onClick={handleNav}><VscFiles /></li>
+                <li data-tab_id={1} className={leftmenu.currentTab === '1' ? 'active' : ""} onClick={handleNav}><VscSearch /></li>
+                <li data-tab_id={2} className={leftmenu.currentTab === '2' ? 'active' : ""} onClick={handleNav}><VscSourceControl /></li>
+                <li data-tab_id={3} className={leftmenu.currentTab === '3' ? 'active' : ""} onClick={handleNav}><VscDebugAlt /></li>
+                <li data-tab_id={4} className={leftmenu.currentTab === '4' ? 'active' : ""} onClick={handleNav}><VscExtensions /></li>
+              </ul>
             <ul className='leftBottom'>
               <li><VscAccount /></li>
               <li><VscSettingsGear /></li>
             </ul>
           </nav>
-          {leftmenu.opened && <LeftMenu tabId={leftmenu.currentTab} />}
+            {leftmenu.opened && <FileManagerContext.Provider value={{openedTabs,setOpenedTabs,file,setFile}}><LeftMenu tabId={leftmenu.currentTab} /></FileManagerContext.Provider>}
         </div>
         <div className='right'>
           <div className='navigation'>
@@ -83,7 +85,7 @@ function App() {
             </div>
           </div>
           <div className='bottom'>
-            <MonacoEditor />
+            <MonacoEditor leftmenu={leftmenu} />
           </div>
         </div>
       </div>

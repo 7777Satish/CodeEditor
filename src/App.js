@@ -8,7 +8,7 @@ import LeftMenu from './Components/LeftMenu';
 
 function App() {
   const [leftmenu, setLeftmenu] = useState({
-    opened: true,
+    opened: false,
     currentTab: 0,
     width: 250
   });
@@ -35,7 +35,9 @@ function App() {
   return <>
     <div className="main">
       <div className='top'>
-        <div className='logo'><VscVscode /></div>
+        <div className='logo'>
+          <img alt='Logo' src="/favicon.ico.svg"/>
+        </div>
         <nav>
           <ul>
             <li>File</li>

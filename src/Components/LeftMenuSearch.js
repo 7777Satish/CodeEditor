@@ -1,4 +1,5 @@
 import styles1 from './LeftMenuCommon.module.css';
+import styles from './LeftMenuSearch.module.css';
 
 function LeftMenuSearch() {
   return (

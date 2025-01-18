@@ -8,9 +8,9 @@ import LeftMenu from './Components/LeftMenu';
 
 function App() {
   const [leftmenu, setLeftmenu] = useState({
-    opened: false,
-    currentTab: 0,
-    width: 250
+    opened: true,
+    currentTab: '0',
+    width: 300
   });
 
   const [openedTabs, setOpenedtabs] = useState([]);
@@ -55,11 +55,11 @@ function App() {
         <div className='left'>
           <nav>
             <ul className='leftTop'>
-              <li data-tab_id={0} className={leftmenu.currentTab === 0 ? 'active' : ""} onClick={handleNav}><VscFiles /></li>
-              <li data-tab_id={1} className={leftmenu.currentTab === 1 ? 'active' : ""} onClick={handleNav}><VscSearch /></li>
-              <li data-tab_id={2} className={leftmenu.currentTab === 2 ? 'active' : ""} onClick={handleNav}><VscSourceControl /></li>
-              <li data-tab_id={3} className={leftmenu.currentTab === 3 ? 'active' : ""} onClick={handleNav}><VscDebugAlt /></li>
-              <li data-tab_id={4} className={leftmenu.currentTab === 4 ? 'active' : ""} onClick={handleNav}><VscExtensions /></li>
+              <li data-tab_id={0} className={leftmenu.currentTab === '0' ? 'active' : ""} onClick={handleNav}><VscFiles /></li>
+              <li data-tab_id={1} className={leftmenu.currentTab === '1' ? 'active' : ""} onClick={handleNav}><VscSearch /></li>
+              <li data-tab_id={2} className={leftmenu.currentTab === '2' ? 'active' : ""} onClick={handleNav}><VscSourceControl /></li>
+              <li data-tab_id={3} className={leftmenu.currentTab === '3' ? 'active' : ""} onClick={handleNav}><VscDebugAlt /></li>
+              <li data-tab_id={4} className={leftmenu.currentTab === '4' ? 'active' : ""} onClick={handleNav}><VscExtensions /></li>
             </ul>
             <ul className='leftBottom'>
               <li><VscAccount /></li>

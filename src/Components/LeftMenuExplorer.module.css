@@ -45,7 +45,7 @@
     display: flex;
     flex-direction: column;
     color: #999;
-    padding: 10px 10px 20px 10px;
+    padding: 10px 15px 20px 15px;
     font-size: small;
 }
 
@@ -80,4 +80,27 @@
     height: 0;
     overflow: hidden;
     padding: 0 10px;
+}
+
+.folder{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.folder .folderContent{
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+.fileName, .folderName{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.fileName:hover, .folderName:hover{
+    background: #252525;
+    color: #ddd;
 }

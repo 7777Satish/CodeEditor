@@ -15,6 +15,12 @@ function App() {
     width: 300
   });
 
+  const [folder,setFolder] = useState({
+    name:null,
+    opened: true,
+    structure:[]
+  });
+
   const [openedTabs, setOpenedTabs] = useState([]);
 
   const [file, setFile] = useState({
@@ -68,7 +74,7 @@ function App() {
               <li><VscSettingsGear /></li>
             </ul>
           </nav>
-            {leftmenu.opened && <FileManagerContext.Provider value={{openedTabs,setOpenedTabs,file,setFile}}><LeftMenu tabId={leftmenu.currentTab} /></FileManagerContext.Provider>}
+            {leftmenu.opened && <FileManagerContext.Provider value={{folder, setFolder, openedTabs,setOpenedTabs,file,setFile}}><LeftMenu tabId={leftmenu.currentTab} /></FileManagerContext.Provider>}
         </div>
         <div className='right'>
           <div className='navigation'>

@@ -1,12 +1,15 @@
 import './App.css';
 import { IoIosMore } from 'react-icons/io';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useRef, useState } from 'react';
 import { VscFiles, VscSearch, VscSourceControl, VscDebugAlt, VscExtensions, VscAccount, VscSettingsGear, VscSplitVertical, VscRemote, VscError, VscWarning, VscBell } from "react-icons/vsc";
 import MonacoEditor from './Components/MonacoEditor';
-import NavigationTab from './Components/NavigationTab';
 import LeftMenu from './Components/LeftMenu';
+import FileNavigation from './Components/FileNavigation';
+import EditorHomeScreen from './Components/EditorHomeScreen';
+import CodeEditor from './Codeeditor';
 
 export const FileManagerContext = createContext();
+export const NavigationContext = createContext();
 
 function App() {
   const [leftmenu, setLeftmenu] = useState({
@@ -16,18 +19,30 @@ function App() {
   });
 
   const [folder,setFolder] = useState({
-    name:null,
+    name: null,
     opened: true,
+    id: null,
     structure:[]
   });
 
-  const [openedTabs, setOpenedTabs] = useState([]);
-
-  const [file, setFile] = useState({
-    name: 'untitled.txt',
-    filetype: 'text',
-    location: null
-  });
+  const [openedTabs, setOpenedTabs] = useState({ items: [], ids: [] });
+  const openedTabsRef = useRef({ ids: [], items: [] });
+  const setOpenedTabsAndRef = (updater) => {
+    setOpenedTabs((prev) => {
+      const newState = updater(prev);
+      openedTabsRef.current = newState; // Keep ref updated
+      return newState;
+    });
+  };
+  
+  const [files, setFiles] = useState([]);
+  // const [files, setFiles] = useState([{
+  //   name: "welcome.txt",
+  //   filetype: "text/css",
+  //   id: null,
+  //   handle: null,
+  //   content: '#Welcome to CodeDesk\n#Open a folder to start coding'
+  // }]);
 
   const handleNav = (e) => {
     const tabId = e.currentTarget.getAttribute('data-tab_id');
@@ -74,16 +89,15 @@ function App() {
               <li><VscSettingsGear /></li>
             </ul>
           </nav>
-            {leftmenu.opened && <FileManagerContext.Provider value={{folder, setFolder, openedTabs,setOpenedTabs,file,setFile}}><LeftMenu tabId={leftmenu.currentTab} /></FileManagerContext.Provider>}
+            {leftmenu.opened && <FileManagerContext.Provider value={{folder, setFolder, openedTabs, setOpenedTabs, openedTabsRef, setOpenedTabsAndRef, files, setFiles}}><LeftMenu tabId={leftmenu.currentTab} /></FileManagerContext.Provider>}
         </div>
+        {
+        files.length?<>
         <div className='right'>
           <div className='navigation'>
-            <div className='files'>
-              <NavigationTab filetype="js" name="App.js" opened={true} />
-              <NavigationTab filetype="python" name="index.py" opened={false} />
-              <NavigationTab filetype="css" name="App.css" opened={false} />
-              <NavigationTab filetype="html" name="index.html" opened={false} />
-            </div>
+            <NavigationContext.Provider value={{openedTabs, setOpenedTabs, openedTabsRef, setOpenedTabsAndRef}}>
+              <FileNavigation />
+            </NavigationContext.Provider>
             <div className='features'>
               <button><VscSettingsGear /></button>
               <button><VscSplitVertical /></button>
@@ -91,9 +105,11 @@ function App() {
             </div>
           </div>
           <div className='bottom'>
-            <MonacoEditor leftmenu={leftmenu} />
+            <CodeEditor file={files[files.length-1]} leftmenu={leftmenu} />
           </div>
-        </div>
+        </div></>
+        : <EditorHomeScreen />
+        }
       </div>
       <div className='bottom'>
         <div className='left'>

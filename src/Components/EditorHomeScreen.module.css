@@ -1,0 +1,37 @@
+.main{
+    background: #111;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 100px;
+    height: 100%;
+}
+
+.main img{
+    filter: grayscale(1) brightness(0.4);
+    width: 300px;
+}
+
+.main .info{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #474747;
+    font-size: small;
+}
+
+.main .info .row{
+    display: flex;
+    gap: 10px;
+}
+
+.main .info .row code{
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: #353535;
+    color: #aaa;
+}

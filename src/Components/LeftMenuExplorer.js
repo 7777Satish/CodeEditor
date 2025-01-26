@@ -1,6 +1,6 @@
 import styles1 from './LeftMenuCommon.module.css';
 import styles from './LeftMenuExplorer.module.css';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, memo } from 'react';
 import { FileManagerContext } from '../App';
 import { IoChevronDown, IoChevronForward, IoCode } from 'react-icons/io5';
 import { IoIosMore, IoLogoJavascript } from 'react-icons/io';
@@ -11,6 +11,7 @@ import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
 
 /* ========= Folder Structure ========= */
 function FolderStructure({ item }) {
+  const { folder, setFolder, openedTabs } = useContext(FileManagerContext);
   const [count, setCount] = useState(0);
   const handleExpand = async () => {
     await item.expand();
@@ -22,6 +23,9 @@ function FolderStructure({ item }) {
     setCount((prev) => prev + 1); // Trigger re-render
   };
 
+  const handleFile = () => {
+    item.file();
+  }
   const fileIcons = {
     html: <IoCode style={{ color: 'orange' }} />,
     css: <FaHashtag style={{ color: 'slateblue' }} />,
@@ -32,10 +36,10 @@ function FolderStructure({ item }) {
     json: <VscJson style={{ color: '#cbcb41' }} />
   };
 
-  if (item.kind == 'file') {
-    return <div className={styles.fileName}>{fileIcons[item.name.split('.')[1]] || <IoCode style={{ color: 'orange' }} />}{item.name}</div>
+  if (item.kind === 'file') {
+    return <div onClick={handleFile} className={styles.fileName}>{fileIcons[item.name.split('.')[1]] || <IoCode style={{ color: 'orange' }} />}{item.name}</div>
   }
-  if (item.kind == 'directory' && !item.opened) {
+  if (item.kind === 'directory' && !item.opened) {
     return <div onClick={handleExpand} className={styles.folderName}>
       <IoChevronForward />{item.name}
     </div>
@@ -50,21 +54,23 @@ function FolderStructure({ item }) {
   </div>;
 }
 
+// FolderStructure = memo(FolderStructure);
 
-
+/* ========= Left Menu Explorer ========= */
 function LeftMenuExplorer() {
   // The opened folder, tabs and current file
-  const { folder, setFolder, openedTabs, setOpenedTabs, file, setFile } = useContext(FileManagerContext);
+  const { folder, setFolder, openedTabs, setOpenedTabs, openedTabsRef, setOpenedTabsAndRef, files, setFiles } = useContext(FileManagerContext);
   
   class Item {
-    constructor(name, kind, opened, handle, structure) {
+    constructor(name, kind, opened, handle, structure, id) {
       this.name = name;
       this.kind = kind;;
       this.opened = opened;
       this.handle = handle;
       this.structure = structure || [];
-      this.id = new Date().getTime() + Math.floor(Math.random() * 1000);
+      this.id = id || new Date().getTime() + Math.floor(Math.random() * 1000);
     }
+
     async expand() {
       let tempS = await Array.fromAsync(this.handle.entries());
       let newS = tempS.map(([n, handle]) => {
@@ -73,9 +79,49 @@ function LeftMenuExplorer() {
       this.structure = newS;
       this.opened = true;
     }
+
     async contract() {
       this.structure = [];
       this.opened = false;
+    }
+
+    getFileType(){
+      if(this.kind == 'file'){
+        return this.name.split('.')[1];
+      }
+    }
+
+    close(){
+      const index = openedTabsRef.current.ids.indexOf(this.id);
+      setOpenedTabsAndRef((prev) => ({
+        ids: prev.ids.filter((e,i)=>i!=index),
+        items: prev.items.filter((e,i)=>i!=index),
+      }));
+      setFiles( (prev) => {
+        return prev.filter((e,i)=>i!=prev.length-1);
+      } );
+    }
+
+    async file() {
+      if (!openedTabsRef.current.ids.includes(this.id)) {
+        setOpenedTabsAndRef((prev) => ({
+          ids: [...prev.ids, this.id],
+          items: [...prev.items, this],
+        }));
+      }
+
+      const f = await this.handle.getFile();
+      const content = await f.text();
+      const newFile = {
+        name: f.name,
+        filetype: f.type,
+        content: content,
+        id: this.id,
+        handle: this.handle
+      }
+      setFiles((prev)=>{
+        return [...prev, newFile];
+      })
     }
   }
 
@@ -89,7 +135,7 @@ function LeftMenuExplorer() {
   ]);
 
   function nothing() {
-    let a = openedTabs + setOpenedTabs + file + setFile;
+    let a = openedTabs + setOpenedTabs + files + setFiles;
     nothing(a);
   }
   if (1 == 2) nothing();
@@ -100,12 +146,12 @@ function LeftMenuExplorer() {
     let id = parseInt(e.currentTarget.getAttribute('data-tabid'));
     setTabs(tabs.map((t, i) => { return id === i ? { ...t, opened: !tabs[i].opened } : t }));
   }
-
+  const folderClass = new Folder(folder.name, folder.kind, folder.opened, folder.handle, folder.structure, folder.id);
   // Returns neatly the structure/content of workspace tab
   const getStructure = () => {
     if (folder.name) {
       return <>
-        <FolderStructure item={new Folder(folder.name, folder.kind, folder.opened, folder.handle, folder.structure)} />
+        <FolderStructure item={folderClass} />
       </>
     } else {
       return <>
@@ -127,7 +173,7 @@ function LeftMenuExplorer() {
         items.push(new Item(name, handle.kind, false, handle, []));
       }
 
-      setFolder({ name: f.name, kind: folder, opened: true, handle: f, structure: items });
+      setFolder({ name: f.name, kind: folder, opened: true, handle: f, id: new Date().getTime() + Math.floor(Math.random() * 10000), structure: items });
 
       localStorage.setItem('recentFolder', JSON.stringify({ name: f.name, opened: f.opened, structure: items }));
     }

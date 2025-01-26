@@ -5,7 +5,7 @@ import { IoLogoJavascript } from 'react-icons/io';
 import { FaHashtag, FaJava, FaPython } from 'react-icons/fa';
 import { FaC } from 'react-icons/fa6';
 
-function NavigationTab({ filetype, name, opened }) {
+function NavigationTab({ item, filetype, name, opened }) {
     const fileIcons = {
         html: <IoCode style={{ color: 'orange' }} />,
         css: <FaHashtag style={{ color: 'slateblue' }} />,
@@ -16,13 +16,17 @@ function NavigationTab({ filetype, name, opened }) {
         json: <VscJson style={{ color: '#cbcb41' }} />
     };
 
+    const handleClick = () => {
+        item.close();
+    }
+
     return (
         <div className={`${styles.main}${opened ? ` ${styles.active}` : ""}`}>
             <span className={styles.icon}>
                 {fileIcons[filetype] || 'T'}
             </span>
             <span>{name}</span>
-            <button className={opened ? `${styles.btnActive}` : ""}><VscClose /></button>
+            <button onClick={handleClick} className={opened ? `${styles.btnActive}` : ""}><VscClose /></button>
         </div>
     );
 }

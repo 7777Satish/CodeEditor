@@ -1,0 +1,46 @@
+/* Set up a counter for line numbers */
+.main{
+    width: 80.4vw;
+    height: calc( 100vh - 87px );
+    overflow: auto;
+}
+
+.main::-webkit-scrollbar{
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    opacity: 0;
+}
+
+.main:hover::-webkit-scrollbar{
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    opacity: 1;
+}
+
+.main:hover::-webkit-scrollbar-thumb{
+    width: 10px;
+    height: 10px;
+    background: rgba(140, 140, 140, 0.5);
+}
+
+code {
+    counter-reset: line; /* Reset the counter at the beginning of the <code> block */
+    font-size: large;
+    color: #ccc;
+    user-select: text;
+    width: 500px;
+}
+
+.codeline {
+    display: block; /* Ensure each line is treated as a block */
+}
+
+.codeline::before {
+    counter-increment: line; /* Increment the counter for each line */
+    content: counter(line); /* Display the counter value as the line number */
+    padding: 0 15px 0 25px;
+    color: #888; /* Optional: Style for line numbers */
+    font-family: monospace; /* Match code font style */
+}

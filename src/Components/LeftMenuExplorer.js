@@ -6,26 +6,41 @@ import { IoChevronDown, IoChevronForward, IoCode } from 'react-icons/io5';
 import { IoIosMore, IoLogoJavascript } from 'react-icons/io';
 import { FaHashtag, FaJava, FaPython } from 'react-icons/fa';
 import { FaC } from 'react-icons/fa6';
-import { VscClose, VscJson } from 'react-icons/vsc';
-import { HiOutlineClipboardDocumentList } from 'react-icons/hi2';
+import { VscJson } from 'react-icons/vsc';
 
 /* ========= Folder Structure ========= */
 function FolderStructure({ item }) {
   const { folder, setFolder, openedTabs } = useContext(FileManagerContext);
-  const [count, setCount] = useState(0);
+  const [count, setCount] =   useState(0);
   const handleExpand = async () => {
-    await item.expand();
+    const str = await item.expand();
+    if(item.id == folder.id){
+      setFolder((f)=>{
+        return { name: f.name, kind: 'directory', opened: true, handle: f.handle, id: f.id, structure: str }
+      });
+    }
     setCount((prev) => prev + 1); // Trigger re-render
   };
 
   const handleContract = async () => {
     await item.contract();
+    if(item.id == folder.id){
+      setFolder({
+        name: folder.name,
+        kind: 'directory',
+        opened: false,
+        handle: folder.handle,
+        id: folder.id,
+        structure:folder.structure
+      });
+    }
     setCount((prev) => prev + 1); // Trigger re-render
   };
 
   const handleFile = () => {
     item.file();
   }
+
   const fileIcons = {
     html: <IoCode style={{ color: 'orange' }} />,
     css: <FaHashtag style={{ color: 'slateblue' }} />,
@@ -45,7 +60,7 @@ function FolderStructure({ item }) {
     </div>
   }
   return <div className={styles.folder}>
-    <div onClick={handleContract} className={styles.folderName}><IoChevronForward />{item.name}</div>
+    <div onClick={handleContract} className={styles.folderName}><IoChevronDown />{item.name}</div>
     <div className={styles.folderContent}>
       {item.structure.map((elm) => {
         return <FolderStructure key={new Date().getTime() + Math.random() * 10000} item={elm} />
@@ -53,8 +68,6 @@ function FolderStructure({ item }) {
     </div>
   </div>;
 }
-
-// FolderStructure = memo(FolderStructure);
 
 /* ========= Left Menu Explorer ========= */
 function LeftMenuExplorer() {
@@ -78,6 +91,7 @@ function LeftMenuExplorer() {
       });
       this.structure = newS;
       this.opened = true;
+      return newS;
     }
 
     async contract() {
@@ -86,7 +100,7 @@ function LeftMenuExplorer() {
     }
 
     getFileType(){
-      if(this.kind == 'file'){
+      if(this.kind === 'file'){
         return this.name.split('.')[1];
       }
     }
@@ -94,11 +108,11 @@ function LeftMenuExplorer() {
     close(){
       const index = openedTabsRef.current.ids.indexOf(this.id);
       setOpenedTabsAndRef((prev) => ({
-        ids: prev.ids.filter((e,i)=>i!=index),
-        items: prev.items.filter((e,i)=>i!=index),
+        ids: prev.ids.filter((e,i)=>i!==index),
+        items: prev.items.filter((e,i)=>i!==index),
       }));
       setFiles( (prev) => {
-        return prev.filter((e,i)=>i!=prev.length-1);
+        return prev.filter((e,i)=>e.id!==this.id);
       } );
     }
 
@@ -120,7 +134,7 @@ function LeftMenuExplorer() {
         handle: this.handle
       }
       setFiles((prev)=>{
-        return [...prev, newFile];
+        return [...prev.filter((e,i)=>e.id!==this.id), newFile];
       })
     }
   }
@@ -133,7 +147,7 @@ function LeftMenuExplorer() {
     { opened: false },
     { opened: false }
   ]);
-
+  const [count, setCount] = useState(0);
   function nothing() {
     let a = openedTabs + setOpenedTabs + files + setFiles;
     nothing(a);
@@ -146,7 +160,7 @@ function LeftMenuExplorer() {
     let id = parseInt(e.currentTarget.getAttribute('data-tabid'));
     setTabs(tabs.map((t, i) => { return id === i ? { ...t, opened: !tabs[i].opened } : t }));
   }
-  const folderClass = new Folder(folder.name, folder.kind, folder.opened, folder.handle, folder.structure, folder.id);
+  const folderClass = new Folder(folder.name, 'directory', folder.opened, folder.handle, folder.structure, folder.id);
   // Returns neatly the structure/content of workspace tab
   const getStructure = () => {
     if (folder.name) {
@@ -173,7 +187,7 @@ function LeftMenuExplorer() {
         items.push(new Item(name, handle.kind, false, handle, []));
       }
 
-      setFolder({ name: f.name, kind: folder, opened: true, handle: f, id: new Date().getTime() + Math.floor(Math.random() * 10000), structure: items });
+      setFolder({ name: f.name, kind: 'directory', opened: true, handle: f, id: new Date().getTime() + Math.floor(Math.random() * 10000), structure: items });
 
       localStorage.setItem('recentFolder', JSON.stringify({ name: f.name, opened: f.opened, structure: items }));
     }

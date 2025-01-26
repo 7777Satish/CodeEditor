@@ -22,6 +22,7 @@ function App() {
     name: null,
     opened: true,
     id: null,
+    kind: 'directory',
     structure:[]
   });
 
@@ -95,7 +96,7 @@ function App() {
         files.length?<>
         <div className='right'>
           <div className='navigation'>
-            <NavigationContext.Provider value={{openedTabs, setOpenedTabs, openedTabsRef, setOpenedTabsAndRef}}>
+            <NavigationContext.Provider value={{openedTabs, setOpenedTabs, openedTabsRef, setOpenedTabsAndRef, files}}>
               <FileNavigation />
             </NavigationContext.Provider>
             <div className='features'>

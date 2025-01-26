@@ -16,17 +16,22 @@ function NavigationTab({ item, filetype, name, opened }) {
         json: <VscJson style={{ color: '#cbcb41' }} />
     };
 
-    const handleClick = () => {
+    const handleClose = (event) => {
+        event.stopPropagation();
         item.close();
+    }
+    
+    const handleOpen = () => {
+        item.file();
     }
 
     return (
-        <div className={`${styles.main}${opened ? ` ${styles.active}` : ""}`}>
+        <div  onClick={handleOpen} className={`${styles.main}${opened ? ` ${styles.active}` : ""}`}>
             <span className={styles.icon}>
                 {fileIcons[filetype] || 'T'}
             </span>
             <span>{name}</span>
-            <button onClick={handleClick} className={opened ? `${styles.btnActive}` : ""}><VscClose /></button>
+            <button onClick={handleClose} className={opened ? `${styles.btnActive}` : ""}><VscClose /></button>
         </div>
     );
 }

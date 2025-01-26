@@ -25,7 +25,7 @@
     background: rgba(140, 140, 140, 0.5);
 }
 
-code {
+.code {
     counter-reset: line; /* Reset the counter at the beginning of the <code> block */
     font-size: large;
     color: #ccc;

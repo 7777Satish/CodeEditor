@@ -50,7 +50,7 @@ function Codeeditor({ file }) {
 
   return (
     <pre className={styles.main}>
-      <code>
+      <code className={styles.code}>
         {file.content.split("\n").map((line, lineIndex) => (
           <div key={lineIndex} className={styles.codeline}>
             {syntaxHighlight(line)}

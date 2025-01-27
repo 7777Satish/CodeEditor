@@ -3,6 +3,8 @@
     width: 80.4vw;
     height: calc( 100vh - 87px );
     overflow: auto;
+    padding-bottom: 81vh;
+    cursor: text;
 }
 
 .main::-webkit-scrollbar{
@@ -31,6 +33,7 @@
     color: #ccc;
     user-select: text;
     width: 500px;
+    cursor: text;
 }
 
 .codeline {

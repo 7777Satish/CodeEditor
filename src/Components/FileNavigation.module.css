@@ -1,0 +1,28 @@
+.files,
+.features {
+    width: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
+
+.files {
+    overflow-x: auto;
+}
+
+.files:hover {
+    overflow-x: auto;
+}
+
+.files::-webkit-scrollbar {
+    height: 2px;
+}
+
+.files::-webkit-scrollbar-thumb {
+    height: 2px;
+    background: linear-gradient(to right, rgba(238, 130, 238, 0.5), rgba(255, 255, 0, 0.5));
+    transition: 0.3s;
+}

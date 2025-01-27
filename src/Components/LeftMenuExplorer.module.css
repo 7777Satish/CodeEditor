@@ -89,8 +89,13 @@
 }
 
 .folder .folderContent{
-    box-sizing: border-box;
     padding-left: 10px;
+    border-left: 1px solid rgba(100,100,100,0);
+    transition: 0.5s;
+}
+
+.folder:hover .folderContent{
+    border-left: 1px solid rgba(100,100,100,0.3);
 }
 
 .fileName, .folderName{
@@ -98,6 +103,10 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
+}
+
+.fileName .icon{
+    width: 10px;
 }
 
 .fileName:hover, .folderName:hover{

@@ -1,6 +1,6 @@
 import styles1 from './LeftMenuCommon.module.css';
 import styles from './LeftMenuExplorer.module.css';
-import { useContext, useState, useEffect, memo } from 'react';
+import { useContext, useState } from 'react';
 import { FileManagerContext } from '../App';
 import { IoChevronDown, IoChevronForward, IoCode } from 'react-icons/io5';
 import { IoIosMore, IoLogoJavascript } from 'react-icons/io';
@@ -10,11 +10,12 @@ import { VscJson } from 'react-icons/vsc';
 
 /* ========= Folder Structure ========= */
 function FolderStructure({ item }) {
-  const { folder, setFolder, openedTabs } = useContext(FileManagerContext);
+  const { folder, setFolder } = useContext(FileManagerContext);
   const [count, setCount] =   useState(0);
+  if(count);
   const handleExpand = async () => {
     const str = await item.expand();
-    if(item.id == folder.id){
+    if(item.id === folder.id){
       setFolder((f)=>{
         return { name: f.name, kind: 'directory', opened: true, handle: f.handle, id: f.id, structure: str }
       });
@@ -24,7 +25,7 @@ function FolderStructure({ item }) {
 
   const handleContract = async () => {
     await item.contract();
-    if(item.id == folder.id){
+    if(item.id === folder.id){
       setFolder({
         name: folder.name,
         kind: 'directory',
@@ -51,8 +52,10 @@ function FolderStructure({ item }) {
     json: <VscJson style={{ color: '#cbcb41' }} />
   };
 
+  if(item.name.startsWith('.')) return <></>;
+
   if (item.kind === 'file') {
-    return <div onClick={handleFile} className={styles.fileName}>{fileIcons[item.name.split('.')[1]] || <IoCode style={{ color: 'orange' }} />}{item.name}</div>
+    return <div onClick={handleFile} className={styles.fileName}><span className={styles.icon}>{fileIcons[item.getFileType()] || <IoCode style={{ color: 'orange' }} />}</span>{item.name}</div>
   }
   if (item.kind === 'directory' && !item.opened) {
     return <div onClick={handleExpand} className={styles.folderName}>
@@ -85,23 +88,25 @@ function LeftMenuExplorer() {
     }
 
     async expand() {
+      this.opened = true;
+      if(this.structure.length){
+        return this.structure;
+      }
       let tempS = await Array.fromAsync(this.handle.entries());
       let newS = tempS.map(([n, handle]) => {
         return new Item(n, handle.kind, false, handle, []);
       });
       this.structure = newS;
-      this.opened = true;
       return newS;
     }
 
     async contract() {
-      this.structure = [];
       this.opened = false;
     }
 
     getFileType(){
       if(this.kind === 'file'){
-        return this.name.split('.')[1];
+        return this.name.split('.')[this.name.split('.').length-1];
       }
     }
 
@@ -147,7 +152,6 @@ function LeftMenuExplorer() {
     { opened: false },
     { opened: false }
   ]);
-  const [count, setCount] = useState(0);
   function nothing() {
     let a = openedTabs + setOpenedTabs + files + setFiles;
     nothing(a);

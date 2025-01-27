@@ -1,7 +1,8 @@
 .main{
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;

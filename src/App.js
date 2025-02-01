@@ -380,7 +380,6 @@ function App() {
           </div>
           <div className={styles.bottom}>
             <MonacoEditor file={files[files.length-1]} leftmenu={leftmenu} />
-            {/* {console.log(files[files.length-1])} */}
             {/* <CodeEditor file={files[files.length-1]} leftmenu={leftmenu} /> */}
           </div>
         </div></>

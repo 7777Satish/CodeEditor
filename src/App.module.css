@@ -196,6 +196,7 @@
 }
 
 .app>.middle .left nav .leftTop {
+    width: 100%;
     margin-top: 10px;
 }
 
@@ -219,6 +220,7 @@
     justify-content: center;
     padding: 5px 0;
     cursor: pointer;
+    border-left: 2px solid transparent;
 }
 
 .app>.middle .left nav ul li:hover {
@@ -227,6 +229,7 @@
 
 .app>.middle .left nav ul .active {
     color: var(--EditorForegroundColor);
+    border-left: 2px solid #007ACC;
 }
 
 /* ========== Left Side Menu End ========== */

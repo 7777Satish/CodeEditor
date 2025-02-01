@@ -50,27 +50,89 @@
     font-size: 18px;
     font-family: 'Poppins', sans-serif;
 }
-
 .app .top .logo img{
     height: 60%;
 }
 
-/* .app .top .logo svg {
-    transform: translateY(2px);
-} */
+.app .top nav{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 
-.app .top ul {
+.app .top nav span{
+    margin-right: 20px; 
+}
+
+.app .top nav span a{
+    color: rgb(191, 184, 231);
+}
+
+.app .top .navList {
     display: flex;
     list-style: none;
     font-size: 100%;
     font-family: 'Segoe UI', sans-serif;
 }
 
-.app .top ul li {
-    padding: 0 5px;
+.app .top .navList li{
+    position: relative;
+    margin: 0 1px;
     display: flex;
+    height: 100%;
+}
+
+.app .top .navList li button{
+    background: inherit;
+    color: inherit;
+    border: none;
+    outline: none;
+    display: flex;
+    padding: 0 5px;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+}
+
+.app .top .navList li button:hover{
+    background: #333;
+    border-radius: 5px;
+}
+
+.app .top .navList li .menu{
+    position: absolute;
+    top: 23px;
+    width: 200px;
+    background: #141414;
+    color: #d4d4d4;
+    border-radius: 5px;
+    border: 1px solid rgba(156, 156, 156, 0.3);
+    display: none;
+}
+
+.navTabActive>button{
+    background: #333 !important;
+    border-radius: 5px !important;
+}
+
+.navTabActive>.menu{
+    display: block !important;
+}
+
+.app .top .navList li .menu .group{
+    padding: 3px 0px;
+    border-bottom: 1px solid rgba(156, 156, 156, 0.3);
+}
+
+.app .top .navList li .menu .group .row{
+    padding: 3px 10px;
+    font-size: 13px;
+}
+
+.app .top .navList li .menu .group .row:hover{
+    background: #007ACC;
 }
 
 /* ============ Top Menu Bar End ============ */

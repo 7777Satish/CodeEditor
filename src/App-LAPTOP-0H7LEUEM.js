@@ -111,22 +111,4 @@ function App() {
             {/* <CodeEditor file={files[files.length-1]} leftmenu={leftmenu} /> */}
           </div>
         </div></>
-        : <EditorHomeScreen />
-        }
-      </div>
-      <div className={styles.bottom}>
-        <div className={styles.left}>
-          <span className={styles.remote}><VscRemote /></span>
-          <span><VscError />0</span>
-          <span><VscWarning />0</span>
-        </div>
-        <div className={styles.right}>
-          <span>Layout US</span>
-          <span><VscBell /></span>
-        </div>
-      </div>
-    </div>
-  </>;
-}
-
-export default App;
+        : <EditorHomeScreen /
